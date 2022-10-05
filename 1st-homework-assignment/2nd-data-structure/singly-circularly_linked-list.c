@@ -280,6 +280,13 @@ node* deleteMiddle(node *tail){
     return tail;
   }
 
+  if (getLength(tail) == 2)
+  {
+    node* temp = tail->next; 
+    temp->next = temp; 
+    free(tail); 
+    return temp; 
+  }
   int middle = round(getLength(tail) / 2.0);
 
   //temp pointer to reach to the middle index
@@ -374,7 +381,7 @@ void displayMenu(){
   printf("8. Reverse the list\n");
   printf("9. Display the list\n");
   printf("10. Clear the list\n");
-  printf("Choose a number between 1-9 or -1 to quit the program\n");
+  printf("Choose a number between 1-10 or -1 to quit the program\n");
   printf("====================================================================\n");
 }
  
