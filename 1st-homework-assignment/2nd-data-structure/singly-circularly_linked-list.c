@@ -16,12 +16,20 @@ node* addtoMiddle(node *tail, int data);
 node* deleteBegin(node *tail);
 node* deleteEnd(node *tail);
 node* deleteMiddle(node *tail);
+
+//return the index
+int search(node *tail, int data);
+
 bool isEmpty(node* tail);
 int getLength(node* tail);
 void display(node* tail);
+void displayMenu();
+
 
 
 int main(){
+  
+  displayMenu();
   struct node* tail = addtoEmpty(5);
   tail = addtoBegin(tail, 15);
   tail = addtoEnd(tail, 3);
@@ -32,9 +40,11 @@ int main(){
   tail = addtoBegin(tail, 15);
   tail = addtoBegin(tail, 99);
   tail = deleteMiddle(tail);
+  
+
 
   display(tail);
-
+  printf("\n%d", search(tail, 15));
 }
 
 node* addtoEmpty(int value){
@@ -181,3 +191,39 @@ node* deleteMiddle(node *tail){
 bool isEmpty(node* tail) {
   return tail->next == NULL;
 }
+
+int search(node *tail, int data) {
+
+  if(isEmpty(tail))
+    return -1; 
+
+  node *temp = tail->next; 
+  int i = 0;
+  do
+  {
+    if(temp->value == data)
+      return i;
+    temp = temp->next;
+    i++;
+  } while (temp != tail->next);
+
+  return -1;
+}
+
+void displayMenu(){
+  printf("=============================================="); 
+"======================";
+  printf("\nMenu:\n");
+  printf("1. Insert At Front\n");
+  printf("2. Insert At End\n");
+  printf("3. Insert at middle\n");
+  printf("4. Delete From Front\n");
+  printf("5. Delete From End\n");
+  printf("6. Delete From Middle\n");
+  printf("7. Search for a element\n(Index of element will be printed, if exists)\n");
+  printf("8. Reverse the list\n");
+  printf("9. Display the list\n");
+  printf("====================================================================\n");
+
+}
+ 
