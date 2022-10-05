@@ -9,51 +9,114 @@ typedef struct node{
 }
 node; 
 
-node* addtoEmpty(int value);
+node* addtoEmpty(node* tail, int value);
 node* addtoBegin(node *tail, int data);
 node* addtoEnd(node *tail, int data);
 node* addtoMiddle(node *tail, int data);
 node* deleteBegin(node *tail);
 node* deleteEnd(node *tail);
 node* deleteMiddle(node *tail);
-
 //return the index
 int search(node *tail, int data);
 
 bool isEmpty(node* tail);
 int getLength(node* tail);
-void display(node* tail);
+bool display(node* tail);
 void displayMenu();
 
 
 
 int main(){
+
+  struct node* tail = (node *)malloc(sizeof(node));
+  tail->next = NULL;
+
+  int number = 0;
+
+  while (number != -1)
+  {  
+    displayMenu();
+    scanf("%d", &number);
+    int temp = 0; 
+    switch (number)
+    {
+      case 1:
+        printf("Provide a number to insert at front\n");
+        scanf("%d", &temp);
+        tail = addtoBegin(tail, temp);
+      break;
+
+      case 2:
+        printf("Provide a number to insert at the end\n");
+        scanf("%d", &temp);
+        tail = addtoEnd(tail, temp);
+      break;
+
+      case 3:
+        printf("Provide a number to insert in the middle\n");
+        scanf("%d", &temp);
+        tail = addtoMiddle(tail, temp);
+      break;
+      
+      case 4:
+        printf("Deleting from front\n");
+        tail = deleteBegin(tail);
+      break;
+
+      case 5:
+        printf("Deleting from end\n");
+        tail = deleteEnd(tail);
+      break;      
+    
+      case 6:
+        printf("Deleting from middle\n");
+        tail = deleteMiddle(tail);
+      break;
+
+      case 7:
+        printf("Provide a number to search\n");
+        scanf("%d", &temp);
+        printf("%d", search(tail, temp));
+      break;
+
+      case 8:
+      break;
+
+      case 9: 
+        printf("Displaying the list\n");
+        display(tail);
+        printf("\n");
+      break;
+
+      default:
+
+      break;
+    }
+
+  }
   
-  displayMenu();
-  struct node* tail = addtoEmpty(5);
-  tail = addtoBegin(tail, 15);
-  tail = addtoEnd(tail, 3);
-  tail = addtoMiddle(tail, 19);
-  tail = addtoMiddle(tail, 12);
-  tail = deleteBegin(tail);
-  tail = deleteEnd(tail);
-  tail = addtoBegin(tail, 15);
-  tail = addtoBegin(tail, 99);
-  tail = deleteMiddle(tail);
+  // tail = addtoBegin(tail, 15);
+  // tail = addtoEnd(tail, 3);
+  // tail = addtoMiddle(tail, 19);
+  // tail = addtoMiddle(tail, 12);
+  // tail = deleteBegin(tail);
+  // // tail = deleteEnd(tail);
+  // // tail = addtoBegin(tail, 15);
+  // // tail = addtoBegin(tail, 99);
+  // // tail = deleteMiddle(tail);
   
 
 
-  display(tail);
-  printf("\n%d", search(tail, 15));
+  // display(tail);
+  // printf("\n%d", search(tail, 15));
 }
 
-node* addtoEmpty(int value){
-  node* temp = (node *)malloc(sizeof(node));
+node* addtoEmpty(node* tail, int value){
   // Element pointer direct to itself 
-  temp->value = value;
-  temp->next = temp;
+  tail->value = value;
+  tail->next = tail;
 
-  return temp; 
+  return tail; 
 }
 
 int getLength(node* tail) {
@@ -69,6 +132,11 @@ int getLength(node* tail) {
 }
 
 node* addtoBegin(node *tail, int data){
+  if (isEmpty(tail))
+  {
+    return addtoEmpty(tail, data);
+  }
+  
   node *temp = (node *)malloc(sizeof(node));
   temp->value = data;
   
@@ -80,6 +148,10 @@ node* addtoBegin(node *tail, int data){
 }
 
 node* addtoEnd(node *tail, int data){
+  if (isEmpty(tail))
+  {
+    return addtoEmpty(tail, data);
+  }
   node *temp = (node *)malloc(sizeof(node));
   temp->value = data;
 
@@ -92,7 +164,10 @@ node* addtoEnd(node *tail, int data){
 }
 
 node* addtoMiddle(node *tail, int data){
-
+  if (isEmpty(tail))
+  {
+    return addtoEmpty(tail, data);
+  }
   int length =  getLength(tail);
   int middle = length % 2 == 0 ? length / 2 : (length + 1) / 2; 
   
@@ -114,7 +189,13 @@ node* addtoMiddle(node *tail, int data){
   return tail;
 }
 
-void display(node* tail){
+bool display(node* tail){
+  if (isEmpty(tail))
+  {
+    printf("List is empty.");
+    return false;
+  }
+  
   node* temp = tail->next; 
   do
   {
@@ -122,9 +203,15 @@ void display(node* tail){
     temp = temp->next;
     
   } while (temp != tail->next);
+  return true;
 }
 
 node* deleteBegin(node *tail){
+  if (isEmpty(tail))
+  {
+    return tail;
+  }
+  
   if (tail->next == tail)
   {
     free(tail);
@@ -141,6 +228,10 @@ node* deleteBegin(node *tail){
 }
 
 node* deleteEnd(node *tail){
+  if (isEmpty(tail))
+  {
+    return tail;
+  }
 
   if (tail->next == tail)
   {
@@ -165,6 +256,11 @@ node* deleteEnd(node *tail){
 }
 
 node* deleteMiddle(node *tail){
+  if (isEmpty(tail))
+  {
+    return tail;
+  }
+
   if (tail->next == tail)
   {
     free(tail);
@@ -223,7 +319,7 @@ void displayMenu(){
   printf("7. Search for a element\n(Index of element will be printed, if exists)\n");
   printf("8. Reverse the list\n");
   printf("9. Display the list\n");
+  printf("Choose a number between 1-9 or -1 to quit the program\n");
   printf("====================================================================\n");
-
 }
  
