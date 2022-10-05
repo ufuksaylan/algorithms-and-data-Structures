@@ -17,6 +17,7 @@ node* deleteBegin(node *tail);
 node* deleteEnd(node *tail);
 node* deleteMiddle(node *tail);
 node* clear(node *tail);
+node* reverse(node* tail);
 
 //return the index
 int search(node *tail, int data);
@@ -30,7 +31,7 @@ void displayMenu();
 
 int main(){
 
-  struct node* tail = NULL;
+  node* tail = NULL;
 
   int number = 0;
 
@@ -81,6 +82,8 @@ int main(){
       break;
 
       case 8:
+        printf("reversing the list\n");
+        tail = reverse(tail);
       break;
 
       case 9: 
@@ -221,7 +224,6 @@ node* deleteBegin(node *tail){
   
   if (tail->next == tail)
   {
-    printf("\n\nselam babacim\n\n");
     free(tail);
     tail = NULL;
     return tail;
@@ -327,6 +329,34 @@ node* clear(node *tail){
   {
     tail = deleteEnd(tail);
   }
+  return tail; 
+}
+
+node* reverse(node* tail) {
+
+  node *prev, *cur, *next, *last;
+
+  if (isEmpty(tail) || tail->next == tail)
+  {
+    printf("Cannot reverse, either empty or one element\n");
+    return tail;
+  }
+
+  last = tail;
+  prev = tail;
+  cur = tail->next;
+  tail = tail->next;
+
+  while (tail != last)
+  {
+    tail = tail->next;
+    cur->next = prev;
+    prev = cur;
+    cur  = tail;
+  }
+  
+  cur->next = prev;
+  tail = prev;  // Make last node as head
   return tail; 
 }
 
