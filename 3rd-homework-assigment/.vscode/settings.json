@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "time.h": "c",
+    "array": "c",
+    "string_view": "c",
+    "initializer_list": "c",
+    "stdio.h": "c",
+    "stdlib.h": "c"
+  }
+}
